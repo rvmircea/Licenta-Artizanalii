@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artizanalii-Api", "Artizanalii-Api\Artizanalii-Api.csproj", "{11F19BB9-37AB-44B1-9E67-6B4F71970ACA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{20E6C2EE-6660-4E02-AB89-04B83F89A711}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artizanalii-UnitTest", "Artizanalii-UnitTest\Artizanalii-UnitTest.csproj", "{20E6C2EE-6660-4E02-AB89-04B83F89A711}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
