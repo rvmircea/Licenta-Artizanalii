@@ -43,17 +43,17 @@ public class BeerRepository : IBeerRepository
 
     public async Task<Beer> UpdateBeerAsync(int beerId, Beer beer)
     {
-        var bereToUpdate = await _context.Beers.FindAsync(beerId);
+        var beerToUpdate = await _context.Beers.FindAsync(beerId);
             
-        if(bereToUpdate is not null)
+        if(beerToUpdate is not null)
         {
-            bereToUpdate.Name = beer.Name;
-            bereToUpdate.Price = beer.Price;
-            bereToUpdate.Description = beer.Description;
-            bereToUpdate.BeerType = beer.BeerType;
+            beerToUpdate.Name = beer.Name;
+            beerToUpdate.Price = beer.Price;
+            beerToUpdate.Description = beer.Description;
+            beerToUpdate.BeerType = beer.BeerType;
         }
 
         await _context.SaveChangesAsync();
-        return bereToUpdate;
+        return beerToUpdate;
     }
 }

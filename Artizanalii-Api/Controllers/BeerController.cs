@@ -27,8 +27,8 @@ namespace Artizanalii_Api.Controllers
             return Ok(beers);
         }
 
-        [HttpGet("{beerId}", Name = "GetBeerByIdAsync")]
-        public async Task<ActionResult<Beer>> GetBeerByIdAsync(int beerId)
+        [HttpGet("{beerId:int}", Name = "GetBeerAsync")]
+        public async Task<ActionResult<Beer>> GetBeerAsync(int beerId)
         {
             var beer = await _beerRepository.GetBeerByIdAsync(beerId);
 
@@ -42,7 +42,7 @@ namespace Artizanalii_Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Beer>> PostBeer([FromBody] Beer beer)
+        public async Task<ActionResult<Beer>> PostBeer([FromBody] Beer? beer)
         {
             if (beer is null)
             {
@@ -50,27 +50,22 @@ namespace Artizanalii_Api.Controllers
             }
 
             var createdEntity =  await _beerRepository.CreateBeerAsync(beer);
-            
-            if(createdEntity is null)
-            {
-                return BadRequest();
-            }
 
-            return CreatedAtAction("GetBeerByIdAsync", new { beerId = beer.Id }, beer);
-
+            return CreatedAtAction(nameof(GetBeerAsync), new { beerId = beer.Id }, beer);
         }
 
         [HttpPut]
-        public async Task<ActionResult<Beer>> UpdateBeerAsync(int beerId, Beer bereToUpdate)
+        public async Task<ActionResult<Beer>> UpdateBeerAsync(int beerId, Beer beerToUpdate)
         {
             var beer = await _beerRepository.GetBeerByIdAsync(beerId);
+            
             if(beer is null)
             {
                 return NotFound();
             }
 
-            await _beerRepository.UpdateBeerAsync(beerId, bereToUpdate);
-            return Ok(bereToUpdate);
+            await _beerRepository.UpdateBeerAsync(beerId, beerToUpdate);
+            return Ok(beerToUpdate);
         }
 
         [HttpDelete("{beerId}")]
