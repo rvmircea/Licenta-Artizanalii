@@ -28,6 +28,7 @@ namespace Artizanalii_Api.Controllers
         }
         
         [HttpGet("{beerId:int}", Name = "GetBeerAsync")]
+        [ActionName("GetBeerAsync")]
         public async Task<ActionResult<Beer>> GetBeerAsync(int beerId)
         {
             var beer = await _beerRepository.GetBeerByIdAsync(beerId);
