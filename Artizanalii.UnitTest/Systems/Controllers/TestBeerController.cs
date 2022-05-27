@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
@@ -11,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Artizanalii.UnitTest.Systems.Controllers;
 
-public class UnitTest1
+public class TestBeerController
 {
     [Fact]
     public async Task Get_OnSuccess_ReturnsStatusCode200()
@@ -35,9 +34,9 @@ public class UnitTest1
             .ReturnsAsync(new List<Beer>() {new Beer() {Name = "TestBeer"}});
         var sut = new BeersController(mockBeerRepository.Object);
         //Act
-        var result = await sut.GetAllBeersAsync();
-        
+        var result = (OkObjectResult) await sut.GetAllBeersAsync();
         //Assert
-        result.Should().BeOfType<ActionResult<ICollection<Beer>>>();
-    }   
+        result.Should().BeOfType<OkObjectResult>();
+        result.StatusCode.Should().Be(200);
+    }
 }

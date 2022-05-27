@@ -17,7 +17,7 @@ namespace Artizanalii_Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ICollection<Beer>>> GetAllBeersAsync()
+        public async Task<ActionResult> GetAllBeersAsync()
         {
             var beers = await _beerRepository.GetAllBeersAsync();
             if (beers.Count == 0)
@@ -26,7 +26,7 @@ namespace Artizanalii_Api.Controllers
             }
             return Ok(beers);
         }
-
+        
         [HttpGet("{beerId:int}", Name = "GetBeerAsync")]
         public async Task<ActionResult<Beer>> GetBeerAsync(int beerId)
         {
