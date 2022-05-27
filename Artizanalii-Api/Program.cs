@@ -19,7 +19,7 @@ builder.Services.AddDbContext<ArtizanaliiContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IBeerRepository, BeerRepository>();
+builder.Services.AddTransient<IBeerRepository, BeerRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
