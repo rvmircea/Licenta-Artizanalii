@@ -1,4 +1,4 @@
-﻿using Artizanalii_Api.Entities.Beer;
+﻿using Artizanalii_Api.Entities.Beers;
 
 namespace Artizanalii_Api.Repositories.Beers;
 

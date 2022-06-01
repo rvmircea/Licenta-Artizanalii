@@ -1,5 +1,5 @@
 ﻿using Artizanalii_Api.Data;
-using Artizanalii_Api.Entities.Beer;
+using Artizanalii_Api.Entities.Beers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Artizanalii_Api.Repositories.Beers;
@@ -51,6 +51,7 @@ public class BeerRepository : IBeerRepository
             beerToUpdate.Price = beer.Price;
             beerToUpdate.Description = beer.Description;
             beerToUpdate.BeerType = beer.BeerType;
+            beerToUpdate.Abv = beer.Abv;
         }
 
         await _context.SaveChangesAsync();

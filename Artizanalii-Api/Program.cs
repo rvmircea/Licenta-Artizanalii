@@ -1,5 +1,7 @@
 using Artizanalii_Api.Data;
 using Artizanalii_Api.Repositories.Beers;
+using Artizanalii_Api.Repositories.ProducerAddresses;
+using Artizanalii_Api.Repositories.Producers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +22,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IBeerRepository, BeerRepository>();
+builder.Services.AddTransient<IProducerRepository, ProducerRepository>();
+builder.Services.AddTransient<IProducerAddressRepository, ProducerAddressRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

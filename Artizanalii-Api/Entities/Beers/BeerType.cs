@@ -1,4 +1,4 @@
-﻿namespace Artizanalii_Api.Entities.Beer;
+﻿namespace Artizanalii_Api.Entities.Beers;
 
 public enum BeerType
 {
