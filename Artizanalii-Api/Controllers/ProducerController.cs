@@ -38,6 +38,14 @@ namespace Artizanalii_Api.Controllers
                 return NotFound();
             }
             return Ok(producers);
+            
+            /*var producers = await _producerRepository.GetAllProducersAsync();
+            if (producers is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(producers);*/
         }
 
         [HttpGet("{producerId:int}", Name = "GetProducerAsync")]
@@ -52,7 +60,8 @@ namespace Artizanalii_Api.Controllers
             }
             
             var newProducer = new ProducerDTO
-            {
+            {   
+                Id = producer.Id,
                 Name = producer.Name,
                 Description = producer.Description,
                 YearFounded = producer.YearFounded,
@@ -65,6 +74,15 @@ namespace Artizanalii_Api.Controllers
             }
 
             return Ok(newProducer);
+            /*var producer = await _producerRepository.GetProducerAsync(producerId);
+
+            if (producer is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(producer);*/
+
         }
 
         [HttpPost("create")]
@@ -75,7 +93,7 @@ namespace Artizanalii_Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var newProdus = new Producer
+            var newProducer = new Producer
             {   
                 Id = producerDto.Id,
                 Name = producerDto.Name,
@@ -85,13 +103,49 @@ namespace Artizanalii_Api.Controllers
             };
             
             
-            var createdEntity = await _producerRepository.CreateProducerAsync(newProdus);
+            var createdEntity = await _producerRepository.CreateProducerAsync(newProducer);
             if (createdEntity is null)
             {
                 return BadRequest(ModelState);
             }
 
             return CreatedAtAction(nameof(GetProducerAsync), new {producerId = createdEntity.Id}, createdEntity);
+        }
+
+        [HttpPut("update")]
+        public async Task<ActionResult<Producer>> UpdateProducerAsync(int producerId, [FromBody] ProducerDTO producerDto)
+        {
+            var producerToUpdate = await _producerRepository.GetProducerAsync(producerDto.Id);
+            if (producerToUpdate is null)
+            {
+                return NotFound();
+            }
+
+            var updatedProducer = new Producer()
+            {
+                Id = producerDto.Id,
+                Name = producerDto.Name,
+                Description = producerDto.Description,
+                YearFounded = producerDto.YearFounded,
+                ProducerAddressId = producerDto.ProducerAddressId
+            };
+
+            await _producerRepository.UpdateProducerAsync(producerId ,updatedProducer);
+            
+            return Ok(updatedProducer);
+        }
+        
+        [HttpDelete("{producerId}")]
+        public async Task<ActionResult<Producer>> DeleteProducerAsync(int producerId)
+        {
+            var producerToDelete = await _producerRepository.DeleteProducerAsync(producerId);
+            if (producerToDelete is null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+
         }
     }
 }

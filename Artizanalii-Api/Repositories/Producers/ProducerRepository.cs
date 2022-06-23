@@ -50,7 +50,6 @@ public class ProducerRepository : IProducerRepository
             producerToUpdate.Beers = producer.Beers;
             producerToUpdate.Wines = producer.Wines;
             producerToUpdate.ProducerAddress = producerToUpdate.ProducerAddress;
-            producerToUpdate.Beers = producer.Beers;
         }
 
         await _context.SaveChangesAsync();

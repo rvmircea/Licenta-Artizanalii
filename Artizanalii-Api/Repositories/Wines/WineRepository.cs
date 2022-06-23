@@ -41,6 +41,7 @@ public class WineRepository : IWineRepository
             wineToUpdate.Description = wine.Description;
             wineToUpdate.Abv = wine.Abv;
             wineToUpdate.YearCreated = wine.YearCreated;
+            wineToUpdate.ProducerId = wine.ProducerId;
         }
 
         await _context.SaveChangesAsync();

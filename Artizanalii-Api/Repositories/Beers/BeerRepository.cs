@@ -23,7 +23,7 @@ public class BeerRepository : IBeerRepository
      
     public async Task<ICollection<Beer>> GetAllBeersAsync()
     {
-        return await _context.Beers.ToListAsync();
+        return await _context.Beers.Include(beer => beer.Producer).ToListAsync();
     }
 
     public async Task<Beer> GetBeerByIdAsync(int beerId)
@@ -34,11 +34,13 @@ public class BeerRepository : IBeerRepository
     public async Task<Beer> DeleteBeerAsync(int beerId)
     {
         var beerToRemove = await _context.Beers.FindAsync(beerId);
-   
+
+        if (beerToRemove is null) return null;
         var beerRemoved = _context.Beers.Remove(beerToRemove);
         await _context.SaveChangesAsync();
 
         return beerRemoved.Entity;
+
     }
 
     public async Task<Beer> UpdateBeerAsync(int beerId, Beer beer)
@@ -52,6 +54,7 @@ public class BeerRepository : IBeerRepository
             beerToUpdate.Description = beer.Description;
             beerToUpdate.BeerType = beer.BeerType;
             beerToUpdate.Abv = beer.Abv;
+            beerToUpdate.ProducerId = beer.ProducerId;
         }
 
         await _context.SaveChangesAsync();

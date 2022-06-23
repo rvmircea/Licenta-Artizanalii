@@ -19,7 +19,7 @@ public class ProducerAddressRepository : IProducerAddressRepository
 
     public async Task<ProducerAddress> GetProducerAddressAsync(int producerAddressId)
     {
-        return await _context.ProducerAddresses.Where(p => p.Id == producerAddressId).FirstAsync();
+        return await _context.ProducerAddresses.FindAsync(producerAddressId);
     }
 
     public async Task<ProducerAddress> CreateProducerAddressAsync(ProducerAddress producerAddress)

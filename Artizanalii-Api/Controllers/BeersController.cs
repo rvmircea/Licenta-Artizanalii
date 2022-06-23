@@ -3,6 +3,7 @@ using Artizanalii_Api.Entities.Beers;
 using Artizanalii_Api.Repositories.Beers;
 using Artizanalii_Api.Repositories.Producers;
 using Microsoft.AspNetCore.Mvc;
+using SQLitePCL;
 
 namespace Artizanalii_Api.Controllers
 {
@@ -22,7 +23,7 @@ namespace Artizanalii_Api.Controllers
         [HttpGet]
         public async Task<ActionResult<BeerDTO>> GetAllBeersAsync()
         {
-            var beers = from b in await _beerRepository.GetAllBeersAsync()
+            /*var beers = from b in await _beerRepository.GetAllBeersAsync()
                                         select new BeerDTO
                                         {   
                                             Id = b.Id,
@@ -38,7 +39,16 @@ namespace Artizanalii_Api.Controllers
             {
                 return NotFound();
             }
+            return Ok(beers);*/
+
+            var beers = await _beerRepository.GetAllBeersAsync();
+            if (beers is null)
+            {
+                return NotFound();
+            }
+
             return Ok(beers);
+
         }
         
         [HttpGet("{beerId:int}", Name = "GetBeerAsync")]
@@ -50,7 +60,7 @@ namespace Artizanalii_Api.Controllers
             {
                 return NotFound();
             }
-            var newBeer = new BeerDTO
+            /*var newBeer = new BeerDTO
             {   
                 Id = beer.Id,
                 Name = beer.Name,
@@ -64,9 +74,9 @@ namespace Artizanalii_Api.Controllers
             if(newBeer is null)
             {
                 return NotFound();
-            }
+            }*/
 
-            return Ok(newBeer);
+            return Ok(beer);
 
         }
 
@@ -120,7 +130,7 @@ namespace Artizanalii_Api.Controllers
             };
             
             await _beerRepository.UpdateBeerAsync(beerId, updatedBeer);
-            await _producerRepository.UpdateProducerAsync(updatedBeer.Id, await _producerRepository.GetProducerAsync(updatedBeer.ProducerId));
+            await _producerRepository.UpdateProducerAsync(updatedBeer.ProducerId, await _producerRepository.GetProducerAsync(updatedBeer.ProducerId));
             return Ok(beerToUpdate);
         }
 

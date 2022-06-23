@@ -66,6 +66,7 @@ namespace Artizanalii_Api.Controllers
 
             var newAddress = new ProducerAddress
             {
+                Id = producerAddress.Id,
                 Address = producerAddress.Address,
                 AddressNumber = producerAddress.AddressNumber,
                 City = producerAddress.City,
@@ -78,8 +79,8 @@ namespace Artizanalii_Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            return CreatedAtAction(nameof(GetProducerAddressAsync), new {createdEntity.Id}, producerAddress);
-
+            return CreatedAtAction(nameof(GetProducerAddressAsync), new {producerAddressId = createdEntity.Id},
+                createdEntity);
         }
     }
 }
