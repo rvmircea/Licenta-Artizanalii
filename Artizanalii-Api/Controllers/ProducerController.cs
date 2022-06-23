@@ -24,12 +24,14 @@ namespace Artizanalii_Api.Controllers
         [HttpGet]
         public async Task<ActionResult> GetProducersAsync()
         {
-            var producers = from b in await _producerRepository.GetAllProducersAsync()
+            var producers = from prod in await _producerRepository.GetAllProducersAsync()
                 select new ProducerDTO
-                {
-                    Name = b.Name,
-                    Description = b.Description,
-                    YearFounded = b.YearFounded
+                {   
+                    Id = prod.Id,
+                    Name = prod.Name,
+                    Description = prod.Description,
+                    YearFounded = prod.YearFounded,
+                    ProducerAddressId = prod.ProducerAddressId
                 };
             if (producers.ToList().Count == 0)
             {
@@ -74,7 +76,8 @@ namespace Artizanalii_Api.Controllers
             }
 
             var newProdus = new Producer
-            {
+            {   
+                Id = producerDto.Id,
                 Name = producerDto.Name,
                 Description = producerDto.Description,
                 YearFounded = producerDto.YearFounded,

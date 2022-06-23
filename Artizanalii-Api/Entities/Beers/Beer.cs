@@ -1,4 +1,5 @@
-﻿using Artizanalii_Api.Entities.Producers;
+﻿using System.Text.Json.Serialization;
+using Artizanalii_Api.Entities.Producers;
 
 namespace Artizanalii_Api.Entities.Beers;
 
@@ -12,5 +13,6 @@ public class Beer
     public double Abv { get; set; }
 
     public int ProducerId { get; set; }
+    [JsonIgnore]
     public Producer Producer { get; set; }
 }

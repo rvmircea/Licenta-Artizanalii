@@ -4,6 +4,7 @@ namespace Artizanalii_Api.DTOs.Producers;
 
 public class ProducerDTO
 {
+    public int Id { get; set; }
     public string Name { get; set; } = "";
     public string? Description { get; set; }
     public int YearFounded { get; set; }
