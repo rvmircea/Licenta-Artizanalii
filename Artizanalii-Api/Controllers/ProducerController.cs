@@ -112,7 +112,7 @@ namespace Artizanalii_Api.Controllers
             return CreatedAtAction(nameof(GetProducerAsync), new {producerId = createdEntity.Id}, createdEntity);
         }
 
-        [HttpPut("update")]
+        [HttpPut("{producerId:int}")]
         public async Task<ActionResult<Producer>> UpdateProducerAsync(int producerId, [FromBody] ProducerDTO producerDto)
         {
             var producerToUpdate = await _producerRepository.GetProducerAsync(producerDto.Id);

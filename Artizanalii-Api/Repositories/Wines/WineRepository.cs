@@ -8,7 +8,7 @@ public class WineRepository : IWineRepository
 {
     private readonly ArtizanaliiContext _context;
 
-    WineRepository(ArtizanaliiContext context)
+    public WineRepository(ArtizanaliiContext context)
     {
         _context = context;
     }
@@ -51,9 +51,10 @@ public class WineRepository : IWineRepository
 
     public async Task<Wine> DeleteWineAsync(int wineId)
     {
-        var beerToRemove = await _context.Wines.FindAsync(wineId);
+        var wineToRemove = await _context.Wines.FindAsync(wineId);
 
-        var wineRemoved = _context.Wines.Remove(beerToRemove);
+        if (wineToRemove is null) return null;
+        var wineRemoved = _context.Wines.Remove(wineToRemove);
 
         await _context.SaveChangesAsync();
         return wineRemoved.Entity;

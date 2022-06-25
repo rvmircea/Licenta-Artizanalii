@@ -83,7 +83,7 @@ namespace Artizanalii_Api.Controllers
                 createdEntity);
         }
 
-        [HttpPut("prodAddressId")]
+        [HttpPut("{prodAddressId:int}")]
         public async Task<ActionResult<ProducerAddress>> UpdateProducerAddressAsync(int prodAddressId,
             [FromBody] ProducerAddressDTO producerAddressDto)
         {
@@ -107,7 +107,7 @@ namespace Artizanalii_Api.Controllers
             return Ok(updatedProdAddress);
         }
 
-        [HttpDelete("{prodAddressId}")]
+        [HttpDelete("{prodAddressId:int}")]
         public async Task<ActionResult> DeleteProducerAddressAsync(int prodAddressId)
         {
             var prodAddressRemoved = await _producerAddressRepository.DeleteProducerAddressAsync(prodAddressId);

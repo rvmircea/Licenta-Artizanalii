@@ -108,7 +108,7 @@ namespace Artizanalii_Api.Controllers
             return CreatedAtAction(nameof(GetBeerAsync), new { beerId = createdEntity.Id }, beer);
         }
 
-        [HttpPut("update")]
+        [HttpPut("{beerId:int}")]
         public async Task<ActionResult<Beer>> UpdateBeerAsync(int beerId, [FromBody] BeerDTO beerToUpdate)
         {
             var beer = await _beerRepository.GetBeerByIdAsync(beerId);

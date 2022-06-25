@@ -2,6 +2,7 @@ using Artizanalii_Api.Data;
 using Artizanalii_Api.Repositories.Beers;
 using Artizanalii_Api.Repositories.ProducerAddresses;
 using Artizanalii_Api.Repositories.Producers;
+using Artizanalii_Api.Repositories.Wines;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IBeerRepository, BeerRepository>();
 builder.Services.AddTransient<IProducerRepository, ProducerRepository>();
 builder.Services.AddTransient<IProducerAddressRepository, ProducerAddressRepository>();
+builder.Services.AddTransient<IWineRepository, WineRepository>();
 
 var app = builder.Build();
 
