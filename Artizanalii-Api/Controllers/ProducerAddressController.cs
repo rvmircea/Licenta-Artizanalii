@@ -82,5 +82,41 @@ namespace Artizanalii_Api.Controllers
             return CreatedAtAction(nameof(GetProducerAddressAsync), new {producerAddressId = createdEntity.Id},
                 createdEntity);
         }
+
+        [HttpPut("prodAddressId")]
+        public async Task<ActionResult<ProducerAddress>> UpdateProducerAddressAsync(int prodAddressId,
+            [FromBody] ProducerAddressDTO producerAddressDto)
+        {
+            var producerAddress = new ProducerAddress()
+            {
+                Id = producerAddressDto.Id,
+                Address = producerAddressDto.Address,
+                AddressNumber = producerAddressDto.AddressNumber,
+                City = producerAddressDto.City,
+                ZipCode = producerAddressDto.ZipCode
+            };
+            
+            var updatedProdAddress =
+                await _producerAddressRepository.UpdateProducerAddressAsync(prodAddressId, producerAddress);
+            
+            if (updatedProdAddress is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(updatedProdAddress);
+        }
+
+        [HttpDelete("{prodAddressId}")]
+        public async Task<ActionResult> DeleteProducerAddressAsync(int prodAddressId)
+        {
+            var prodAddressRemoved = await _producerAddressRepository.DeleteProducerAddressAsync(prodAddressId);
+            if (prodAddressRemoved is null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

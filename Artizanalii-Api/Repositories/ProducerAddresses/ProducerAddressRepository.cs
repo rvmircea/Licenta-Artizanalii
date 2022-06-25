@@ -39,6 +39,10 @@ public class ProducerAddressRepository : IProducerAddressRepository
             producerAddressToUpdate.AddressNumber = producerAddress.AddressNumber;
             producerAddressToUpdate.ZipCode = producerAddress.ZipCode;
         }
+        else
+        {
+            return null;
+        }
 
         await _context.SaveChangesAsync();
         return producerAddressToUpdate;
@@ -47,11 +51,13 @@ public class ProducerAddressRepository : IProducerAddressRepository
     public async Task<ProducerAddress> DeleteProducerAddressAsync(int producerAddressId)
     {
         var producerAddressToDelete = await _context.ProducerAddresses.FindAsync(producerAddressId);
-   
+
+        if (producerAddressToDelete is null) return null;
         var producerAddressRemoved = _context.ProducerAddresses.Remove(producerAddressToDelete);
         await _context.SaveChangesAsync();
 
         return producerAddressRemoved.Entity;
+
     }
 
 }
