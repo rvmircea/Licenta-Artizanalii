@@ -54,7 +54,7 @@ namespace Artizanalii_Api.Controllers
 
             return Ok(producersAddress); 
         }
-
+        
         [HttpPost("create")]
         public async Task<ActionResult<ProducerAddress>> CreateProducerAddressAsync(
             [FromBody] ProducerAddressDTO producerAddress)
