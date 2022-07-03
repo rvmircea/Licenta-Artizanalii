@@ -59,31 +59,17 @@ namespace Artizanalii_Api.Controllers
                 return NotFound();
             }
             
-            var newProducer = new ProducerDTO
+            /*var newProducer = new ProducerDTO
             {   
                 Id = producer.Id,
                 Name = producer.Name,
                 Description = producer.Description,
                 YearFounded = producer.YearFounded,
                 ProducerAddressId = producer.ProducerAddressId
-            };
-            
-            if (newProducer is null)
-            {
-                return NotFound();
-            }
+            };*/
 
             /*return Ok(newProducer);*/
             return Ok(producer);
-            /*var producer = await _producerRepository.GetProducerAsync(producerId);
-
-            if (producer is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(producer);*/
-
         }
 
         [HttpPost("create")]
@@ -94,14 +80,7 @@ namespace Artizanalii_Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var newProducer = new Producer
-            {   
-                Id = producerDto.Id,
-                Name = producerDto.Name,
-                Description = producerDto.Description,
-                YearFounded = producerDto.YearFounded,
-                ProducerAddressId = producerDto.ProducerAddressId
-            };
+            var newProducer = NewProducer(producerDto);
             
             
             var createdEntity = await _producerRepository.CreateProducerAsync(newProducer);
@@ -127,18 +106,15 @@ namespace Artizanalii_Api.Controllers
                 return NotFound();
             }
 
-            var updatedProducer = new Producer()
-            {
-                Id = producerDto.Id,
-                Name = producerDto.Name,
-                Description = producerDto.Description,
-                YearFounded = producerDto.YearFounded,
-                ProducerAddressId = producerDto.ProducerAddressId
-            };
+            var updatedProducer = NewProducer(producerDto);
 
-            await _producerRepository.UpdateProducerAsync(producerId ,updatedProducer);
+            var newProducer = await _producerRepository.UpdateProducerAsync(producerId ,updatedProducer);
+            if (newProducer is null)
+            {
+                return BadRequest();
+            }
             
-            return Ok(updatedProducer);
+            return Ok(newProducer);
         }
         
         [HttpDelete("{producerId}")]
@@ -151,7 +127,18 @@ namespace Artizanalii_Api.Controllers
             }
 
             return NoContent();
+        }
 
+        private static Producer? NewProducer(ProducerDTO producerDto)
+        {
+            return new Producer
+            {
+                Id = producerDto.Id,
+                Name = producerDto.Name,
+                Description = producerDto.Description,
+                YearFounded = producerDto.YearFounded,
+                ProducerAddressId = producerDto.ProducerAddressId
+            };
         }
     }
 }

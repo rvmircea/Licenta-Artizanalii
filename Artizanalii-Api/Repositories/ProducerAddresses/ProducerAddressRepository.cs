@@ -1,6 +1,7 @@
 ﻿using Artizanalii_Api.Data;
 using Artizanalii_Api.Entities.ProducerAddresses;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Artizanalii_Api.Repositories.ProducerAddresses;
 
@@ -17,12 +18,12 @@ public class ProducerAddressRepository : IProducerAddressRepository
         return await _context.ProducerAddresses.OrderBy(p => p.Id).ToListAsync();
     }
 
-    public async Task<ProducerAddress> GetProducerAddressAsync(int producerAddressId)
+    public async Task<ProducerAddress?> GetProducerAddressAsync(int producerAddressId)
     {
         return await _context.ProducerAddresses.FindAsync(producerAddressId);
     }
 
-    public async Task<ProducerAddress> CreateProducerAddressAsync(ProducerAddress producerAddress)
+    public async Task<ProducerAddress?> CreateProducerAddressAsync(ProducerAddress? producerAddress)
     {
         var producerAddressCreated = await _context.ProducerAddresses.AddAsync(producerAddress);
         await _context.SaveChangesAsync();
@@ -48,7 +49,7 @@ public class ProducerAddressRepository : IProducerAddressRepository
         return producerAddressToUpdate;
     }
 
-    public async Task<ProducerAddress> DeleteProducerAddressAsync(int producerAddressId)
+    public async Task<ProducerAddress?> DeleteProducerAddressAsync(int producerAddressId)
     {
         var producerAddressToDelete = await _context.ProducerAddresses.FindAsync(producerAddressId);
 

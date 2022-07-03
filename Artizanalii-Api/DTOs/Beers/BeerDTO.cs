@@ -5,8 +5,8 @@ namespace Artizanalii_Api.DTOs.Beers;
 public class BeerDTO
 {
     public int Id { get; set; }
-    public string Name { get; set; } = "";
-    public string Description { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
     public BeerType BeerType { get; set; }
     public decimal Price { get; set; }
     public double Abv { get; set; }

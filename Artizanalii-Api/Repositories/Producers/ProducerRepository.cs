@@ -1,6 +1,7 @@
 ﻿using Artizanalii_Api.Data;
 using Artizanalii_Api.Entities.Producers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Artizanalii_Api.Repositories.Producers;
 
@@ -22,7 +23,7 @@ public class ProducerRepository : IProducerRepository
             .ToListAsync();
     }
 
-    public async Task<Producer> GetProducerAsync(int producerId)
+    public async Task<Producer?> GetProducerAsync(int producerId)
     {
         var entity =  await _context.Producers.Where(p => p.Id == producerId)
             .Include(p => p.Beers)
@@ -32,18 +33,18 @@ public class ProducerRepository : IProducerRepository
         return entity;
     }
 
-    public async Task<Producer> CreateProducerAsync(Producer producer)
+    public async Task<Producer?> CreateProducerAsync(Producer? producer)
     {
         var producerCreated = await _context.Producers.AddAsync(producer);
         await _context.SaveChangesAsync();
         return producerCreated.Entity;
     }
 
-    public async Task<Producer> UpdateProducerAsync(int producerId, Producer producer)
+    public async Task<Producer?> UpdateProducerAsync(int producerId, Producer? producer)
     {
         var producerToUpdate = await _context.Producers.FindAsync(producerId);
         if (producerToUpdate is not null)
-        {
+        {  
             producerToUpdate.Name = producer.Name;
             producerToUpdate.Description = producer.Description;
             producerToUpdate.YearFounded = producer.YearFounded;
@@ -56,7 +57,7 @@ public class ProducerRepository : IProducerRepository
         return producerToUpdate;
     }
 
-    public async Task<Producer> DeleteProducerAsync(int producerId)
+    public async Task<Producer?> DeleteProducerAsync(int producerId)
     {
         var producerToRemove = await _context.Producers.FindAsync(producerId);
         var producerRemoved = _context.Producers.Remove(producerToRemove);

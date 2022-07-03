@@ -21,7 +21,7 @@ namespace Artizanalii_Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<BeerDTO>> GetAllBeersAsync()
+        public async Task<ActionResult<ICollection<Beer>>> GetAllBeersAsync()
         {
             /*var beers = from b in await _beerRepository.GetAllBeersAsync()
                                         select new BeerDTO
@@ -122,7 +122,8 @@ namespace Artizanalii_Api.Controllers
             {
                 return NotFound();
             }
-
+            
+            
             var updatedBeer = new Beer
             {
                 Id = beerToUpdate.Id,
@@ -157,6 +158,21 @@ namespace Artizanalii_Api.Controllers
             }
 
             return NoContent();
+        }
+
+        private static BeerDTO BeerToDto(Beer beer)
+        {
+            var beerDto = new BeerDTO
+            {
+                Id = beer.Id,
+                Name = beer.Name,
+                Description = beer.Description,
+                BeerType = beer.BeerType,
+                Abv = beer.Abv,
+                Price = beer.Price,
+                ProducerId = beer.ProducerId
+            };
+            return beerDto;
         }
     }
 }

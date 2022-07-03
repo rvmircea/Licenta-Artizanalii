@@ -26,12 +26,12 @@ public class BeerRepository : IBeerRepository
         return await _context.Beers.Include(beer => beer.Producer).ToListAsync();
     }
 
-    public async Task<Beer> GetBeerByIdAsync(int beerId)
+    public async Task<Beer?> GetBeerByIdAsync(int beerId)
     {
         return await _context.Beers.FindAsync(beerId);
     }
 
-    public async Task<Beer> DeleteBeerAsync(int beerId)
+    public async Task<Beer?> DeleteBeerAsync(int beerId)
     {
         var beerToRemove = await _context.Beers.FindAsync(beerId);
 
@@ -43,7 +43,7 @@ public class BeerRepository : IBeerRepository
 
     }
 
-    public async Task<Beer> UpdateBeerAsync(int beerId, Beer beer)
+    public async Task<Beer?> UpdateBeerAsync(int beerId, Beer beer)
     {
         var beerToUpdate = await _context.Beers.FindAsync(beerId);
         

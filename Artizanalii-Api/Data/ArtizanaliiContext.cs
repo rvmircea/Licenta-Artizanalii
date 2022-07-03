@@ -15,8 +15,8 @@ public class ArtizanaliiContext : DbContext
 
     public DbSet<Beer> Beers { get; set; }
     public DbSet<Wine> Wines { get; set; }
-    public DbSet<Producer> Producers { get; set; }
-    public DbSet<ProducerAddress> ProducerAddresses { get; set; }
+    public DbSet<Producer?> Producers { get; set; }
+    public DbSet<ProducerAddress?> ProducerAddresses { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Beer>().Property(b => b.Price).HasPrecision(12, 10);
