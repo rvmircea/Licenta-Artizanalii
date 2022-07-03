@@ -72,7 +72,11 @@ namespace Artizanalii_Api.Controllers
         [HttpPut("{wineId:int}")]
         public async Task<ActionResult<Wine>> UpdateWineAsync(int wineId, [FromBody] WineDto wineToUpdate)
         {
-            var UpdatedWine = new Wine()
+            if (wineId != wineToUpdate.Id)
+            {
+                return BadRequest();
+            }
+            var updatedWine = new Wine()
             {
                 Id = wineToUpdate.Id,
                 Name = wineToUpdate.Name,
@@ -83,7 +87,7 @@ namespace Artizanalii_Api.Controllers
                 ProducerId = wineToUpdate.ProducerId
             };
 
-            var createdWine = await _wineRepository.UpdateWineAsync(wineId, UpdatedWine);
+            var createdWine = await _wineRepository.UpdateWineAsync(wineId, updatedWine);
             if (createdWine is null)
             {
                 return BadRequest();

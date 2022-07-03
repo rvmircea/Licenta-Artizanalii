@@ -73,7 +73,8 @@ namespace Artizanalii_Api.Controllers
                 return NotFound();
             }
 
-            return Ok(newProducer);
+            /*return Ok(newProducer);*/
+            return Ok(producer);
             /*var producer = await _producerRepository.GetProducerAsync(producerId);
 
             if (producer is null)
@@ -115,6 +116,11 @@ namespace Artizanalii_Api.Controllers
         [HttpPut("{producerId:int}")]
         public async Task<ActionResult<Producer>> UpdateProducerAsync(int producerId, [FromBody] ProducerDTO producerDto)
         {
+            if (producerId != producerDto.Id)
+            {
+                return BadRequest();
+            }
+            
             var producerToUpdate = await _producerRepository.GetProducerAsync(producerDto.Id);
             if (producerToUpdate is null)
             {

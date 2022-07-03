@@ -46,7 +46,7 @@ public class BeerRepository : IBeerRepository
     public async Task<Beer> UpdateBeerAsync(int beerId, Beer beer)
     {
         var beerToUpdate = await _context.Beers.FindAsync(beerId);
-            
+        
         if(beerToUpdate is not null)
         {
             beerToUpdate.Name = beer.Name;

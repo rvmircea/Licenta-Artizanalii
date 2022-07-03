@@ -111,6 +111,11 @@ namespace Artizanalii_Api.Controllers
         [HttpPut("{beerId:int}")]
         public async Task<ActionResult<Beer>> UpdateBeerAsync(int beerId, [FromBody] BeerDTO beerToUpdate)
         {
+            if (beerId != beerToUpdate.Id)
+            {
+                return BadRequest();
+            }
+            
             var beer = await _beerRepository.GetBeerByIdAsync(beerId);
             
             if(beer is null)
@@ -134,7 +139,7 @@ namespace Artizanalii_Api.Controllers
             return Ok(beerToUpdate);
         }
 
-        [HttpDelete("{beerId}")]
+        [HttpDelete("{beerId:int}")]
         public async Task<ActionResult<Beer>> DeleteBeer(int beerId)
         {
             var beerToDelete = await  _beerRepository.GetBeerByIdAsync(beerId);

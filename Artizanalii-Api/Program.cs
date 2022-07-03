@@ -22,6 +22,16 @@ builder.Services.AddDbContext<ArtizanaliiContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:7094",
+            "https://localhost:7094").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
+
 builder.Services.AddTransient<IBeerRepository, BeerRepository>();
 builder.Services.AddTransient<IProducerRepository, ProducerRepository>();
 builder.Services.AddTransient<IProducerAddressRepository, ProducerAddressRepository>();
@@ -37,6 +47,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
+
 
 app.UseAuthorization();
 

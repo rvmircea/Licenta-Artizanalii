@@ -87,6 +87,11 @@ namespace Artizanalii_Api.Controllers
         public async Task<ActionResult<ProducerAddress>> UpdateProducerAddressAsync(int prodAddressId,
             [FromBody] ProducerAddressDTO producerAddressDto)
         {
+            if (prodAddressId != producerAddressDto.Id)
+            {
+                return BadRequest();
+            }
+            
             var producerAddress = new ProducerAddress()
             {
                 Id = producerAddressDto.Id,
