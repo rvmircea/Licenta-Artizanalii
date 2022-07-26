@@ -1,7 +1,9 @@
 using Artizanalii_Api.Data;
 using Artizanalii_Api.Repositories.Beers;
+using Artizanalii_Api.Repositories.Categories;
 using Artizanalii_Api.Repositories.ProducerAddresses;
 using Artizanalii_Api.Repositories.Producers;
+using Artizanalii_Api.Repositories.Products;
 using Artizanalii_Api.Repositories.Wines;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,21 +28,27 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:7094",
-            "https://localhost:7094").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("https://vite-m0ts504hs-rvmircea.vercel.app/", "https://vite-rvmircea.vercel.app/","http://localhost:7094",
+                "https://localhost:7094", "http://localhost:5173", "http://localhost:3000").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
     });
 });
 
+/*builder.Services.AddCors(option =>
+{
+    option.AddDefaultPolicy(b => b.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+});*/
 
-builder.Services.AddTransient<IBeerRepository, BeerRepository>();
-builder.Services.AddTransient<IProducerRepository, ProducerRepository>();
-builder.Services.AddTransient<IProducerAddressRepository, ProducerAddressRepository>();
-builder.Services.AddTransient<IWineRepository, WineRepository>();
+builder.Services.AddScoped<IBeerRepository, BeerRepository>();
+builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
+builder.Services.AddScoped<IProducerAddressRepository, ProducerAddressRepository>();
+builder.Services.AddScoped<IWineRepository, WineRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

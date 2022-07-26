@@ -24,28 +24,28 @@ namespace Artizanalii_Api.Controllers
         [HttpGet]
         public async Task<ActionResult> GetProducersAsync()
         {
-            var producers = from prod in await _producerRepository.GetAllProducersAsync()
-                select new ProducerDTO
-                {   
-                    Id = prod.Id,
-                    Name = prod.Name,
-                    Description = prod.Description,
-                    YearFounded = prod.YearFounded,
-                    ProducerAddressId = prod.ProducerAddressId
-                };
-            if (producers.ToList().Count == 0)
-            {
-                return NotFound();
-            }
-            return Ok(producers);
+            // var producers = from prod in await _producerRepository.GetAllProducersAsync()
+            //     select new ProducerDto
+            //     {   
+            //         Id = prod.Id,
+            //         Name = prod.Name,
+            //         Description = prod.Description,
+            //         YearFounded = prod.YearFounded,
+            //         ProducerAddressId = prod.ProducerAddressId
+            //     };
+            // if (producers.ToList().Count == 0)
+            // {
+            //     return NotFound();
+            // }
+            // return Ok(producers);
             
-            /*var producers = await _producerRepository.GetAllProducersAsync();
+            var producers = await _producerRepository.GetAllProducersAsync();
             if (producers is null)
             {
                 return NotFound();
             }
 
-            return Ok(producers);*/
+            return Ok(producers);
         }
 
         [HttpGet("{producerId:int}", Name = "GetProducerAsync")]
@@ -73,7 +73,7 @@ namespace Artizanalii_Api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<Producer>> CreateProducerAsync([FromBody] ProducerDTO producerDto)
+        public async Task<ActionResult<Producer>> CreateProducerAsync([FromBody] ProducerDto producerDto)
         {
             if (producerDto is null)
             {
@@ -93,7 +93,7 @@ namespace Artizanalii_Api.Controllers
         }
 
         [HttpPut("{producerId:int}")]
-        public async Task<ActionResult<Producer>> UpdateProducerAsync(int producerId, [FromBody] ProducerDTO producerDto)
+        public async Task<ActionResult<Producer>> UpdateProducerAsync(int producerId, [FromBody] ProducerDto producerDto)
         {
             if (producerId != producerDto.Id)
             {
@@ -129,7 +129,7 @@ namespace Artizanalii_Api.Controllers
             return NoContent();
         }
 
-        private static Producer? NewProducer(ProducerDTO producerDto)
+        private static Producer? NewProducer(ProducerDto producerDto)
         {
             return new Producer
             {

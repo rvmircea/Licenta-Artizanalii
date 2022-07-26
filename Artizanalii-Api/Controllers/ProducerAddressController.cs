@@ -21,12 +21,11 @@ namespace Artizanalii_Api.Controllers
             _producerAddressRepository = producerAddressRepository;
         }
         
-        
         [HttpGet]
         public async Task<ActionResult> GetProducerAddressesAsync()
         {
             var producersAddresses = from pa in await _producerAddressRepository.GetAllProducerAddressAsync()
-                select new ProducerAddressDTO
+                select new ProducerAddressDto
                 {
                     Id = pa.Id,
                     City = pa.City,
@@ -57,7 +56,7 @@ namespace Artizanalii_Api.Controllers
         
         [HttpPost("create")]
         public async Task<ActionResult<ProducerAddress>> CreateProducerAddressAsync(
-            [FromBody] ProducerAddressDTO producerAddress)
+            [FromBody] ProducerAddressDto producerAddress)
         {
             if (producerAddress is null)
             {
@@ -85,7 +84,7 @@ namespace Artizanalii_Api.Controllers
 
         [HttpPut("{prodAddressId:int}")]
         public async Task<ActionResult<ProducerAddress>> UpdateProducerAddressAsync(int prodAddressId,
-            [FromBody] ProducerAddressDTO producerAddressDto)
+            [FromBody] ProducerAddressDto producerAddressDto)
         {
             if (prodAddressId != producerAddressDto.Id)
             {

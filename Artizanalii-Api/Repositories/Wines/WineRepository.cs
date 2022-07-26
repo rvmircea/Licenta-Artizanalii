@@ -1,6 +1,7 @@
 ﻿using Artizanalii_Api.Data;
 using Artizanalii_Api.Entities.Wines;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Artizanalii_Api.Repositories.Wines;
 
@@ -13,17 +14,17 @@ public class WineRepository : IWineRepository
         _context = context;
     }
     
-    public async Task<ICollection<Wine>> GetAllWinesAsync()
+    public async Task<ICollection<Wine?>> GetAllWinesAsync()
     {
         return await _context.Wines.ToListAsync();
     }
 
-    public async Task<Wine> GetWineByIdAsync(int wineId)
+    public async Task<Wine?> GetWineByIdAsync(int wineId)
     {
         return await _context.Wines.FindAsync(wineId);
     }
 
-    public async Task<Wine> CreateWineAsync(Wine wine)
+    public async Task<Wine?> CreateWineAsync(Wine? wine)
     {
         var wineCreated = await _context.Wines.AddAsync(wine);
         await _context.SaveChangesAsync();
@@ -49,7 +50,7 @@ public class WineRepository : IWineRepository
         return wineToUpdate;
     }
 
-    public async Task<Wine> DeleteWineAsync(int wineId)
+    public async Task<Wine?> DeleteWineAsync(int wineId)
     {
         var wineToRemove = await _context.Wines.FindAsync(wineId);
 

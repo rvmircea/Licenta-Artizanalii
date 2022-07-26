@@ -2,7 +2,7 @@
 
 namespace Artizanalii_Api.DTOs.Beers;
 
-public class BeerDTO
+public record BeerDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

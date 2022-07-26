@@ -81,7 +81,7 @@ namespace Artizanalii_Api.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<Beer>> PostBeer([FromBody] BeerDTO beer)
+        public async Task<ActionResult<Beer>> PostBeer([FromBody] BeerDto beer)
         {
             if (beer is null)
             {
@@ -109,7 +109,7 @@ namespace Artizanalii_Api.Controllers
         }
 
         [HttpPut("{beerId:int}")]
-        public async Task<ActionResult<Beer>> UpdateBeerAsync(int beerId, [FromBody] BeerDTO beerToUpdate)
+        public async Task<ActionResult<Beer>> UpdateBeerAsync(int beerId, [FromBody] BeerDto beerToUpdate)
         {
             if (beerId != beerToUpdate.Id)
             {
@@ -160,9 +160,9 @@ namespace Artizanalii_Api.Controllers
             return NoContent();
         }
 
-        private static BeerDTO BeerToDto(Beer beer)
+        private static BeerDto BeerToDto(Beer beer)
         {
-            var beerDto = new BeerDTO
+            var beerDto = new BeerDto
             {
                 Id = beer.Id,
                 Name = beer.Name,

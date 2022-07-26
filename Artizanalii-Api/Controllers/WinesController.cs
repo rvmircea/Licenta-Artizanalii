@@ -29,7 +29,6 @@ namespace Artizanalii_Api.Controllers
             {
                 return NotFound();
             }
-
             return Ok(wines);
         }
 
@@ -42,8 +41,7 @@ namespace Artizanalii_Api.Controllers
             {
                 return NotFound();
             }
-
-            return wine;
+            return Ok(wine);
         }
 
         [HttpPost("create")]
