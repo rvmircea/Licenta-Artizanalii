@@ -5,7 +5,9 @@ namespace Artizanalii_Api.Repositories.Baskets;
 
 public interface IBasketRepository
 {
-    Task<Basket> GetBasket(string userId);
+    Task<Basket> GetBasketAsync(string userId);
 
-    Task<bool> AddToBasket(string userId, BasketItem basketItem);
+    Task<bool> AddToBasketAsync(string userId, BasketItem basketItem);
+    Task<bool> RemoveFromBasketAsync(int productId);
+    Task<bool> RemoveAllFromBasketAsync(string userId);
 }

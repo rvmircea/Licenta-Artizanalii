@@ -18,17 +18,17 @@ public class BasketRepository : IBasketRepository
         _context = context;
     }
     
-    public async Task<Basket> GetBasket(string userId)
+    public async Task<Basket> GetBasketAsync(string userId)
     {
         var userBasket = await _context.Baskets.Where(b => b.UserId == userId).Include(b => b.BasketItems).ThenInclude(b => b.Product).FirstOrDefaultAsync();
         if (userBasket is null)
         {
-           return await CreateNewBasket(userId);
+           return await CreateNewBasketAsync(userId);
         }
         return userBasket;
     }
 
-    public async Task<bool> AddToBasket(string userId, BasketItem basketItem)
+    public async Task<bool> AddToBasketAsync(string userId, BasketItem basketItem)
     {
         if (userId != basketItem.UserId)
         {
@@ -78,7 +78,44 @@ public class BasketRepository : IBasketRepository
         return true;
     }
 
-    public async  Task<Basket> CreateNewBasket(string userId)
+    public async Task<bool> RemoveFromBasketAsync(int productId)
+    {
+        var basketItem = await _context.BasketItems.FindAsync(productId);
+        if (basketItem is null)
+        {
+            return false;
+        }
+
+        var entity = _context.BasketItems.Remove(basketItem);
+        if (entity.State != EntityState.Deleted)
+        {
+            return false;
+        }
+
+        await _context.SaveChangesAsync();
+        
+        return true;
+    }
+
+    public async Task<bool> RemoveAllFromBasketAsync(string userId)
+    {
+        var basket = await _context.Baskets.Where(b => b.UserId == userId).FirstOrDefaultAsync();
+        if (basket is null)
+        {
+            return false;
+        }
+
+        var entity = _context.Baskets.Remove(basket);
+        if (entity.State != EntityState.Deleted)
+        {
+            return false;
+        }
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    private async Task<Basket> CreateNewBasketAsync(string userId)
     {
         _context.Baskets.Add(new Basket
         {

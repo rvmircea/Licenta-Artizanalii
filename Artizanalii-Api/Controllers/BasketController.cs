@@ -24,20 +24,44 @@ namespace Artizanalii_Api.Controllers
         [HttpGet]
         public async Task<ActionResult<Basket>> GetUserBasketAsync(string userId)
         {
-            var basket = await _basketRepository.GetBasket(userId);
+            var basket = await _basketRepository.GetBasketAsync(userId);
             return Ok(basket);
         }
 
         [HttpPost]
         public async Task<ActionResult<bool>> AddToCartAsync(string userId, BasketItem item)
         {
-            var result = await _basketRepository.AddToBasket(userId, item);
+            var result = await _basketRepository.AddToBasketAsync(userId, item);
             if (result)
             {
                 return Ok("Added");
             }
 
             return BadRequest();
+        }
+
+        [HttpDelete("{basketItemId:int}")]
+        public async Task<ActionResult<bool>> DeleteBasketItemAsync(int basketItemId)
+        {
+            var result = await _basketRepository.RemoveFromBasketAsync(basketItemId);
+            if (result is false)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<bool>> DeleteAllBasketItemsAsync(string userId)
+        {
+            var result = await _basketRepository.RemoveAllFromBasketAsync(userId);
+            if (result is false)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
         }
     }
 }
