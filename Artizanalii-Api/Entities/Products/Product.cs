@@ -1,4 +1,5 @@
-﻿using Artizanalii_Api.Entities.Categories;
+﻿using System.Text.Json.Serialization;
+using Artizanalii_Api.Entities.Categories;
 using Artizanalii_Api.Entities.Producers;
 
 namespace Artizanalii_Api.Entities.Products;
@@ -12,6 +13,7 @@ public class Product
     public decimal MSRP { get; set; }
     public double? Abv { get; set; }
     public string ImgUrl { get; set; } = string.Empty;
+    
     public Category? Category { get; set; }
     public int CategoryId { get; set; }
     

@@ -12,6 +12,6 @@ public class ProducerAddress
     public int AddressNumber { get; set; }
     [RegularExpression(@"^[0-9]{6}$", ErrorMessage = "ZipCode must have 6 digits")] 
     public int ZipCode { get; set; }
-    [JsonIgnore]
-    public virtual Producer Producer { get; set; }
+    // [JsonIgnore]
+    // public virtual Producer Producer { get; set; }
 }

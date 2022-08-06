@@ -16,10 +16,10 @@ public class Producer
     public int ProducerAddressId { get; set; }
     public virtual ProducerAddress ProducerAddress { get; set;}
     
-    [JsonIgnore]
+    /*[JsonIgnore]
     public virtual ICollection<Beer> Beers { get; set; }
     [JsonIgnore]
-    public virtual ICollection<Wine> Wines { get; set; }
+    public virtual ICollection<Wine> Wines { get; set; }*/
     
     // public virtual ICollection<Product> Products { get; set; }
 

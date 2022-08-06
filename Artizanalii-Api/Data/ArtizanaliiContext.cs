@@ -1,4 +1,6 @@
-﻿using Artizanalii_Api.Entities.Beers;
+﻿using Artizanalii_Api.Entities.BasketItems;
+using Artizanalii_Api.Entities.Baskets;
+using Artizanalii_Api.Entities.Beers;
 using Artizanalii_Api.Entities.Categories;
 using Artizanalii_Api.Entities.ProducerAddresses;
 using Artizanalii_Api.Entities.Producers;
@@ -22,6 +24,8 @@ public class ArtizanaliiContext : DbContext
     
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Basket> Baskets { get; set; }
+    public DbSet<BasketItem> BasketItems { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -42,23 +46,30 @@ public class ArtizanaliiContext : DbContext
         //     .HasForeignKey(product => product.ProducerId)
         //     .OnDelete(DeleteBehavior.Cascade);
         
-        modelBuilder.Entity<ProducerAddress>()
-            .HasOne(p => p.Producer)
-            .WithOne(pa => pa.ProducerAddress)
-            .HasForeignKey<Producer>(p => p.ProducerAddressId);
+        // modelBuilder.Entity<ProducerAddress>()
+        //     .HasOne(p => p.Producer)
+        //     .WithOne(pa => pa.ProducerAddress)
+        //     .HasForeignKey<Producer>(p => p.ProducerAddressId);
 
-        modelBuilder.Entity<Beer>()
-            .HasOne(b => b.Producer)
-            .WithMany(p => p.Beers)
-            .HasForeignKey(b => b.ProducerId)
-            .OnDelete(DeleteBehavior.Cascade);
+        // modelBuilder.Entity<Beer>()
+        //     .HasOne(b => b.Producer)
+        //     .WithMany(p => p.Beers)
+        //     .HasForeignKey(b => b.ProducerId)
+        //     .OnDelete(DeleteBehavior.Cascade);
+        //
+        // modelBuilder.Entity<Wine>()
+        //     .HasOne(w => w.Producer)
+        //     .WithMany(p => p.Wines)
+        //     .HasForeignKey(w => w.ProducerId)
+        //     .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<Wine>()
-            .HasOne(w => w.Producer)
-            .WithMany(p => p.Wines)
-            .HasForeignKey(w => w.ProducerId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
+        modelBuilder.Entity<Basket>().HasData(
+            new Basket()
+            {
+                Id = 1,
+                UserId = "auth0|1",
+            }
+        );
         
         modelBuilder.Entity<Category>().HasData(
             new Category

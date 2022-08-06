@@ -54,4 +54,14 @@ public class ProductRepository : IProductRepository
             .Take(productsPerPage).ToListAsync();
         return products;
     }
+
+    public async Task<Product?> GetProductBySearch(string producerName, int id)
+    {
+        var product = await _context.Products
+            .Where(p => p.Id == id && p.Producer.Name.ToLower().Contains(producerName) )
+            .Include(p => p.Producer)
+            .FirstOrDefaultAsync();
+        return product ?? null;
+    }
+    
 }

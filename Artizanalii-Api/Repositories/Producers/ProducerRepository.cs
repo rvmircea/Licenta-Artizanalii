@@ -17,8 +17,6 @@ public class ProducerRepository : IProducerRepository
     public async Task<ICollection<Producer>> GetAllProducersAsync()
     {
         return await _context.Producers.OrderBy(p => p.Id)
-            .Include(p => p.Beers)
-            .Include(p => p.Wines)
             .Include(p => p.ProducerAddress)
             .ToListAsync();
     }
@@ -26,8 +24,7 @@ public class ProducerRepository : IProducerRepository
     public async Task<Producer?> GetProducerAsync(int producerId)
     {
         var entity =  await _context.Producers.Where(p => p.Id == producerId)
-            .Include(p => p.Beers)
-            .Include(p => p.Wines)
+            
             .Include(p => p.ProducerAddress)
             .FirstOrDefaultAsync();
         return entity;
@@ -48,8 +45,6 @@ public class ProducerRepository : IProducerRepository
             producerToUpdate.Name = producer.Name;
             producerToUpdate.Description = producer.Description;
             producerToUpdate.YearFounded = producer.YearFounded;
-            producerToUpdate.Beers = producer.Beers;
-            producerToUpdate.Wines = producer.Wines;
             producerToUpdate.ProducerAddress = producerToUpdate.ProducerAddress;
         }
 
