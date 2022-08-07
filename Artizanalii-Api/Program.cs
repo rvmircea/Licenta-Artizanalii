@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,13 @@ builder.Services.AddDbContext<ArtizanaliiContext>(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Stripe
+StripeConfiguration.ApiKey =
+    "sk_test_51KcmBYD7EKw07oOm3YxPjnCcs6S7bbWyXrGQk4b5GwQabV8dn8dBeJzpqZlfZGJgYxKMNuzqVUFNQ2Gd4L9iiJD700P5iQ1dms";
+
+
+
 
 //Auth0
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
