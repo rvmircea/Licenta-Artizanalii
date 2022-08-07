@@ -17,18 +17,13 @@ namespace Artizanalii_Api.Controllers
     [ApiController]
     public class PaymentIntentApiController : ControllerBase
     {
-        private readonly IBasketRepository _basketRepository;
-
-        public PaymentIntentApiController(IBasketRepository basketRepository)
-        {
-            _basketRepository = basketRepository;
-        }
+        
         [HttpPost]
         [Authorize(Policy = "buy:products")]
         public async Task<ActionResult> CreateAsync(Basket basket)
         {
             var paymentIntentService = new PaymentIntentService();
-            var paymentIntent = paymentIntentService.Create(new PaymentIntentCreateOptions
+            var paymentIntent = await paymentIntentService.CreateAsync(new PaymentIntentCreateOptions
             {
                 Amount = decimal.ToInt64(basket.TotalPrice * 100),
                 Currency = "ron",
@@ -38,7 +33,6 @@ namespace Artizanalii_Api.Controllers
                 },
                 ReceiptEmail = "vmircea1771@gmail.com",
             });
-            await _basketRepository.RemoveAllFromBasketAsync(basket.UserId);
             return Ok(new {clientSecret = paymentIntent.ClientSecret});
         }
     }
