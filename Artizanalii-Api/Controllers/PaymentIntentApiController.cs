@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using System.Text;
 using System.Text.Json;
+using Artizanalii_Api.DTOs;
 using Artizanalii_Api.Repositories.Baskets;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
@@ -19,8 +20,8 @@ namespace Artizanalii_Api.Controllers
     {
         
         [HttpPost]
-        [Authorize(Policy = "buy:products")]
-        public async Task<ActionResult> CreateAsync(Basket basket)
+        // [Authorize(Policy = "buy:products")]
+        public async Task<ActionResult> CreateAsync(BasketDto basket)
         {
             var paymentIntentService = new PaymentIntentService();
             var paymentIntent = await paymentIntentService.CreateAsync(new PaymentIntentCreateOptions

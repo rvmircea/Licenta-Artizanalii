@@ -1,9 +1,8 @@
 ﻿using Artizanalii_Api.Entities.BasketItems;
-using Artizanalii_Api.Entities.Orders;
 
-namespace Artizanalii_Api.Entities.Baskets;
+namespace Artizanalii_Api.DTOs;
 
-public class Basket
+public class BasketDto
 {
     public int Id { get; set; }
     public string UserId { get; set; } = string.Empty;

@@ -10,4 +10,5 @@ public interface IBasketRepository
     Task<bool> AddToBasketAsync(string userId, BasketItem basketItem);
     Task<bool> RemoveFromBasketAsync(int productId);
     Task<bool> RemoveAllFromBasketAsync(string userId);
+    Task<bool> RemoveItemsFromBasketAsync(int basketId);
 }

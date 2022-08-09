@@ -63,5 +63,17 @@ namespace Artizanalii_Api.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("all")]
+        public async Task<ActionResult<bool>> DeleteItemsFromBasketAsync(int basketId)
+        {
+            var result = await _basketRepository.RemoveItemsFromBasketAsync(basketId);
+            if (result is false)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
+        }
     }
 }

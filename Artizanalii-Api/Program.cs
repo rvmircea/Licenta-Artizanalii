@@ -6,6 +6,7 @@ using Artizanalii_Api.Helpers.Auth;
 using Artizanalii_Api.Repositories.Baskets;
 using Artizanalii_Api.Repositories.Beers;
 using Artizanalii_Api.Repositories.Categories;
+using Artizanalii_Api.Repositories.Orders;
 using Artizanalii_Api.Repositories.ProducerAddresses;
 using Artizanalii_Api.Repositories.Producers;
 using Artizanalii_Api.Repositories.Products;
@@ -72,6 +73,9 @@ builder.Services.AddScoped<IWineRepository, WineRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

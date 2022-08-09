@@ -64,7 +64,8 @@ public class BasketRepository : IBasketRepository
             {
                 basketItem.BasketId = userBasket.Id;
                 var newBasketItem = new BasketItem
-                {
+                {   
+                    UserId = basketItem.UserId,
                     BasketId = basketItem.BasketId,
                     Quantity = basketItem.Quantity,
                     Product = await _context.Products.FindAsync(basketItem.ProductId),
@@ -97,6 +98,19 @@ public class BasketRepository : IBasketRepository
         return true;
     }
 
+    public async Task<bool> RemoveItemsFromBasketAsync(int basketId)
+    {
+        var basket = await _context.Baskets.Where(b => b.Id == basketId).FirstOrDefaultAsync();
+        if (basket is null)
+        {
+            return false;
+        }
+
+        basket.BasketItems = new List<BasketItem>();
+        await _context.SaveChangesAsync();
+        return true;
+    }
+    
     public async Task<bool> RemoveAllFromBasketAsync(string userId)
     {
         var basket = await _context.Baskets.Where(b => b.UserId == userId).FirstOrDefaultAsync();
@@ -104,7 +118,7 @@ public class BasketRepository : IBasketRepository
         {
             return false;
         }
-
+        
         var entity = _context.Baskets.Remove(basket);
         if (entity.State != EntityState.Deleted)
         {

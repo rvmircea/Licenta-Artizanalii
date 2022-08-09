@@ -2,6 +2,8 @@
 using Artizanalii_Api.Entities.Baskets;
 using Artizanalii_Api.Entities.Beers;
 using Artizanalii_Api.Entities.Categories;
+using Artizanalii_Api.Entities.OrderItems;
+using Artizanalii_Api.Entities.Orders;
 using Artizanalii_Api.Entities.ProducerAddresses;
 using Artizanalii_Api.Entities.Producers;
 using Artizanalii_Api.Entities.Products;
@@ -26,6 +28,9 @@ public class ArtizanaliiContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<Basket> Baskets { get; set; }
     public DbSet<BasketItem> BasketItems { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
@@ -33,6 +38,7 @@ public class ArtizanaliiContext : DbContext
         modelBuilder.Entity<Wine>().Property(w => w.Price).HasPrecision(12, 10);
         modelBuilder.Entity<Product>().Property(p => p.Price).HasPrecision(12, 6);
         modelBuilder.Entity<Product>().Property(p => p.MSRP).HasPrecision(12, 6);
+        modelBuilder.Entity<Order>().Property(o => o.TotalPrice).HasPrecision(12, 6);
 
         modelBuilder.Entity<Product>()
             .HasOne(product => product.Category)
@@ -62,6 +68,7 @@ public class ArtizanaliiContext : DbContext
         //     .WithMany(p => p.Wines)
         //     .HasForeignKey(w => w.ProducerId)
         //     .OnDelete(DeleteBehavior.Cascade);
+        
 
         modelBuilder.Entity<Basket>().HasData(
             new Basket()
