@@ -47,6 +47,10 @@ public class OrderRepository : IOrderRepository
             {
                 product.StockQuantity -= item.Quantity;
             }
+            else
+            {
+                return null;
+            }
 
             await _context.SaveChangesAsync();
         }
