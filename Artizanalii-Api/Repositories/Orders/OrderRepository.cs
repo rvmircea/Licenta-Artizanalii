@@ -41,6 +41,14 @@ public class OrderRepository : IOrderRepository
                 ProductId = item.ProductId,
                 Quantity = item.Quantity,
             });
+
+            var product = await _context.Products.Where(p => p.Id == item.ProductId).FirstOrDefaultAsync();
+            if (product is not null && product.StockQuantity - item.Quantity >= 0)
+            {
+                product.StockQuantity -= item.Quantity;
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         var newOrder = new Order
